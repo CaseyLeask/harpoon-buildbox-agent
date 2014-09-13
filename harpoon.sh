@@ -61,5 +61,7 @@ if (($update==1)); then
   pip install docker-harpoon==$required_version
 
 fi
-harpoon $@ --harpoon-config "$DIR/harpoon.yml"
+
+export HARPOON_CONFIG="$DIR/harpoon.yml"
+harpoon $@
 
