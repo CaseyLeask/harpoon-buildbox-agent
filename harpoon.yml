@@ -1,0 +1,36 @@
+---
+
+harpoon_version: "0.3.25.2"
+
+image_name_prefix: buildbox-agent
+
+respect_gitignore: true
+
+images:
+  agent:
+    commands:
+      - FROM ubuntu:14.04
+
+      - RUN apt-get update -qq
+      - RUN apt-get install -y curl git
+
+      # Install Docker
+      - RUN curl -sSL https://get.docker.io/ubuntu/ | sh
+
+      # Install VirtualEnv
+      - exit 1
+
+      # Install buildbox-agent
+      - RUN VERSION=1.0-beta.1 bash -c "`curl -sL https://raw.githubusercontent.com/buildbox/agent/master/install.sh`"
+      - RUN ln -s /.buildbox/bin/buildbox /usr/local/bin/buildbox
+
+      # Use our fig-enabled bootstrap
+      - ADD harpoon.sh /.buildbox/harpoon.sh
+      - RUN chmod u+x /.buildbox/harpoon.sh
+    tasks:
+      start_agent:
+        description: "Start the agent"
+        options:
+          env:
+            - BUILDBOX_AGENT_TOKEN
+          bash: "buildbox agent start --meta-data harpoon --bootstrap-script /.buildbox/harpoon.sh"
