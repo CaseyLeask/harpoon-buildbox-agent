@@ -30,13 +30,12 @@ images:
       - RUN ln -s /.buildbox/bin/buildbox /usr/local/bin/buildbox
 
       # Use our harpoon bootstrap
-      - ADD harpoon.sh /.buildbox/harpoon.sh
-      - ADD harpoon.yml /.buildbox/harpoon.yml
-      - RUN chmod u+x /.buildbox/harpoon.sh
+      - ADD bootstrap.harpoon.sh /.buildbox/bootstrap.harpoon.sh
+      - RUN chmod u+x /.buildbox/bootstrap.harpoon.sh
     tasks:
       start_agent:
         description: "Start the agent"
         options:
           env:
             - BUILDBOX_AGENT_TOKEN
-          bash: "buildbox agent start --meta-data harpoon --bootstrap-script /.buildbox/harpoon.sh"
+          bash: "buildbox agent start --meta-data harpoon --bootstrap-script /.buildbox/bootstrap.harpoon.sh"
