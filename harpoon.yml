@@ -38,4 +38,5 @@ images:
         options:
           env:
             - BUILDBOX_AGENT_TOKEN
+            - DOCKER_HOST
           bash: "buildbox agent start --meta-data harpoon --bootstrap-script /.buildbox/bootstrap.harpoon.sh"
