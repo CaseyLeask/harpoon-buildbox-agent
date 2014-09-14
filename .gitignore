@@ -1,3 +1,5 @@
 .Python
 bin/
 include/
+.harpoon/
+lib/
