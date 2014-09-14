@@ -17,7 +17,13 @@ images:
       # Install Docker
       - RUN curl -sSL https://get.docker.io/ubuntu/ | sh
 
+      # Install Python
+      - RUN apt-get install -qq python2.7
+
       # Install VirtualEnv
+      - RUN curl -O https://pypi.python.org/packages/source/v/virtualenv/virtualenv-1.10.1.tar.gz
+      - RUN tar xvfz virtualenv-1.10.1.tar.gz
+      - RUN cd virtualenv-1.10.1 && sudo python2.7 setup.py install
 
       # Install buildbox-agent
       - RUN VERSION=1.0-beta.1 bash -c "`curl -sL https://raw.githubusercontent.com/buildbox/agent/master/install.sh`"
@@ -25,6 +31,7 @@ images:
 
       # Use our harpoon bootstrap
       - ADD harpoon.sh /.buildbox/harpoon.sh
+      - ADD harpoon.yml /.buildbox/harpoon.yml
       - RUN chmod u+x /.buildbox/harpoon.sh
     tasks:
       start_agent:
